@@ -14,7 +14,8 @@ TLSAUTHKEY="/etc/openvpn/ta.key"
 CACRT="/etc/openvpn/easy-rsa/keys/ca.crt"  
 EASYRSADIR="/etc/openvpn/easy-rsa"  
 CLIENTNAME=$1
-
+SERVERPROTO="tcp"
+SERVERIP="81.23.226.84"
 
 # FROM THIS POINT YOU SHOULDN'T HAVE TO CHANGE A THING
 
@@ -91,10 +92,10 @@ fi
 echo "
 client
 dev tun
-proto tcp
+proto $SERVERPROTO
 auth SHA512
 cipher AES-256-CBC
-remote 81.23.226.84 443
+remote $SERVERIP
 resolv-retry infinite
 nobind
 persist-key
