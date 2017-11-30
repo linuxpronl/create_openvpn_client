@@ -16,6 +16,7 @@ EASYRSADIR="/etc/openvpn/easy-rsa"
 CLIENTNAME=$1
 SERVERPROTO="tcp"
 SERVERIP="81.23.226.84"
+SERVERPORT="443"
 
 # FROM THIS POINT YOU SHOULDN'T HAVE TO CHANGE A THING
 
@@ -95,7 +96,7 @@ dev tun
 proto $SERVERPROTO
 auth SHA512
 cipher AES-256-CBC
-remote $SERVERIP
+remote $SERVERIP $SERVERPORT
 resolv-retry infinite
 nobind
 persist-key
