@@ -1,0 +1,93 @@
+#!/bin/bash
+
+KEYSDIR="/etc/openvpn/easy-rsa/keys" 
+OUTDIR="/etc/openvpn/clients" 
+TLSAUTHKEY="/etc/openvpn/ta.key" 
+CACRT="/etc/openvpn/easy-rsa/keys/ca.crt"  
+EASYRSADIR="/etc/openvpn/easy-rsa"  
+CLIENTNAME=$1
+
+if [ $# -eq 0 ]
+  then
+    echo ""
+    echo "ERROR: No client name given"
+    echo "       Usage: ./create-client <clientname>"
+    echo ""
+    exit 1
+fi
+
+# Check if config already exists 
+if [ -f $OUTDIR/$CLIENTNAME.ovpn ]; then
+  echo "ERROR: $CLIENTNAME.ovpn already exist in $OUTDIR"
+  read -p "Overwrite Y/n " input
+if [[ $input = "n" || $input = "N" ]]; then 
+    echo "Stopped"
+    exit 0
+  fi
+fi 
+
+# Check if host ca has been created
+if [ ! -f $KEYSDIR/ca.crt ]; then
+  echo ""
+  echo "ERROR: ca.crt not found in $KEYSDIR."
+  echo "       Create server keys first"
+  echo ""
+  exit 2
+fi
+
+# Check if TLS AUTH server key has been created
+if [ ! -f $TLSAUTHKEY ]; then
+  echo ""
+  echo "ERROR: $TLSAUTHKEY not found."
+  echo "       Create TLS AUTH key with openvpn server keys first"
+  echo "       Example: openvpn --genkey --secret ta.key"
+  echo ""
+  exit 2
+fi
+
+
+read -p "Create OpenVPN client configurationfile for $CLIENTNAME? Y/n " input
+
+if [[ $input = "n" || $input = "N" ]]; then 
+   echo "Stopped"
+   exit 0; 
+fi
+
+
+
+
+#cd $EASYRSADIR
+#source ./vars
+#./build-key $CLIENTNAME
+
+
+
+echo "
+client
+dev tun
+proto tcp
+auth SHA512
+cipher AES-256-CBC
+remote 81.23.226.84 443
+resolv-retry infinite
+nobind
+persist-key
+persist-tun
+comp-lzo
+verb 3
+key-direction 1
+<ca>" > $OUTDIR/$CLIENTNAME.ovpn
+cat $KEYSDIR/ca.crt >> $OUTDIR/$CLIENTNAME.ovpn
+echo "</ca>
+<cert>" >> $OUTDIR/$CLIENTNAME.ovpn
+cat $KEYSDIR/$CLIENTNAME.crt  >> $OUTDIR/$CLIENTNAME.ovpn
+echo "</cert>
+<key>" >> $OUTDIR/$CLIENTNAME.ovpn
+cat $KEYSDIR/$CLIENTNAME.key >> $OUTDIR/$CLIENTNAME.ovpn
+echo "</key>
+<tls-auth>" >> $OUTDIR/$CLIENTNAME.ovpn
+cat $TLSAUTHKEY >> $OUTDIR/$CLIENTNAME.ovpn
+echo "</tls-auth>"  >> $OUTDIR/$CLIENTNAME.ovpn
+
+echo ""
+echo "OpenVPN client created: $OUTDIR/$CLIENTNAME.ovpn" 
