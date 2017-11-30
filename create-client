@@ -6,6 +6,8 @@
 # Created: 30-NOV-2017
 
 
+
+# CONFIGURATION
 KEYSDIR="/etc/openvpn/easy-rsa/keys" 
 OUTDIR="/etc/openvpn/clients" 
 TLSAUTHKEY="/etc/openvpn/ta.key" 
@@ -13,6 +15,10 @@ CACRT="/etc/openvpn/easy-rsa/keys/ca.crt"
 EASYRSADIR="/etc/openvpn/easy-rsa"  
 CLIENTNAME=$1
 
+
+# FROM THIS POINT YOU SHOULDN'T HAVE TO CHANGE A THING
+
+# Check if clientname is given at commandline
 if [ $# -eq 0 ]
   then
     echo ""
@@ -27,7 +33,9 @@ if [ -f $OUTDIR/$CLIENTNAME.ovpn ]; then
   echo "ERROR: $CLIENTNAME.ovpn already exist in $OUTDIR"
   read -p "Overwrite Y/n " input
 if [[ $input = "n" || $input = "N" ]]; then 
+    echo ""
     echo "Stopped"
+    echo ""
     exit 0
   fi
 fi 
@@ -54,17 +62,23 @@ fi
 
 read -p "Create OpenVPN client configurationfile for $CLIENTNAME? Y/n " input
 
+
 if [[ $input = "n" || $input = "N" ]]; then 
    echo "Stopped"
    exit 0; 
 fi
 
 
+read -p "Do you want to create the $CLIENTNAME key and cert y/N " input
 
 
-#cd $EASYRSADIR
-#source ./vars
-#./build-key $CLIENTNAME
+if [[ $input ="y" || $input = "Y" ]]; then 
+
+cd $EASYRSADIR
+source ./vars
+./build-key $CLIENTNAME
+fi 
+
 
 
 
