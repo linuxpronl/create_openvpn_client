@@ -1,4 +1,5 @@
-##Create OpenVPN client configuration##
+Create OpenVPN client configuration
+
 
 Intro
 
@@ -9,13 +10,16 @@ It's not tested on Ubuntu, other Debian derivates and SuSE.
 
 The script can also be used to create the client key and certificate or you can skip this step and just create a configuration file with existing cert's and key's. 
 
-Since TLS-AUTH is strongly recommended, the script creats a client confiuguration with tls-auth. You have to set the TLSAUTHKEY parameter pointing to the tls-auth key. 
+Since TLS-AUTH is strongly recommended, the script creats a client confiuguration with tls-auth. You have to set the TLSAUTHKEY parameter pointing to the tls-auth key. You should have created the TLS-AUTH key before running this script. See Config for details. 
+
+
 
 Assumptions
 
 Assumtions are the mother of all fuckups so lets mention them: 
-- assuming you have a working OpenVPN server configuration preferably with TLS-AUTH
-- assuming you have (basic) Linux knowlegde 
+- assuming you have a working OpenVPN server configuration with TLS-AUTH
+- assuming you have (basic) Linux knowlegde
+
 
 
 Config
