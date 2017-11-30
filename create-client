@@ -1,5 +1,11 @@
 #!/bin/bash
 
+# Create OpenVPN client configuration file (*.ovpn)
+# M. Wijtkamp
+# Version 1.0beta
+# Created: 30-NOV-2017
+
+
 KEYSDIR="/etc/openvpn/easy-rsa/keys" 
 OUTDIR="/etc/openvpn/clients" 
 TLSAUTHKEY="/etc/openvpn/ta.key" 
