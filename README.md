@@ -1,4 +1,4 @@
-# create_openvpn_client
+Create OpenVPN client configuration
 
 Intro
 
