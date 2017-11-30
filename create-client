@@ -72,13 +72,19 @@ fi
 read -p "Do you want to create the $CLIENTNAME key and cert y/N " input
 
 
-if [[ $input ="y" || $input = "Y" ]]; then 
+if [[ $input = "y" || $input = "Y" ]]; then 
 
 cd $EASYRSADIR
 source ./vars
 ./build-key $CLIENTNAME
 fi 
 
+if [[ ! -d $KEYSDIR/$CLIENTNAME.crt ]]; then
+  echo ""
+  echo "ERROR: $KEYSDIR/$CLIENTNAME.crt not found. Have you build a key for $CLIENTNAME?" 
+  echo ""
+  exit 9
+fi
 
 
 
