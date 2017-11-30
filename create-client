@@ -5,8 +5,6 @@
 # Version 1.0beta
 # Created: 30-NOV-2017
 
-
-
 # CONFIGURATION
 KEYSDIR="/etc/openvpn/easy-rsa/keys" 
 OUTDIR="/etc/openvpn/clients" 
@@ -61,24 +59,17 @@ if [ ! -f $TLSAUTHKEY ]; then
   exit 2
 fi
 
-
 read -p "Create OpenVPN client configurationfile for $CLIENTNAME? Y/n " input
-
-
 if [[ $input = "n" || $input = "N" ]]; then 
    echo "Stopped"
    exit 0; 
 fi
 
-
 read -p "Do you want to create the $CLIENTNAME key and cert y/N " input
-
-
 if [[ $input = "y" || $input = "Y" ]]; then 
-
-cd $EASYRSADIR
-source ./vars
-./build-key $CLIENTNAME
+   cd $EASYRSADIR
+   source ./vars
+   ./build-key $CLIENTNAME
 fi 
 
 if [[ ! -d $KEYSDIR/$CLIENTNAME.crt ]]; then
@@ -89,7 +80,7 @@ if [[ ! -d $KEYSDIR/$CLIENTNAME.crt ]]; then
 fi
 
 
-
+# ACTUAL START OF PUTTING IT ALL TOGETHER AND CREATE THE OVPN CONFIGURATION FILE
 echo "
 client
 dev tun
