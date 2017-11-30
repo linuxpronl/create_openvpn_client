@@ -97,7 +97,3 @@ echo "</tls-auth>"  >> $OUTDIR/$CLIENTNAME.ovpn
 
 echo ""
 echo "OpenVPN client created: $OUTDIR/$CLIENTNAME.ovpn" 
-<<<<<<< HEAD
-
-=======
->>>>>>> 629a4dbd8dd37f9fcda8f421a0d41f0f5e0ac255
